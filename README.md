@@ -5,7 +5,7 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 
 ## How To Use
 * Sign up and Log in to the [Open Weather Map website](https://home.openweathermap.org)
-Create a new API KEY [HERE](https://home.openweathermap.org/api_key)
+Create a new API key [HERE](https://home.openweathermap.org/api_key)
 * Go to the following directory on your Windows computer:
 `C:\Users\your_username\.gradle`
 * Create a new file named `gradle.properties` with the following content:
