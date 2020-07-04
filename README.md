@@ -18,5 +18,9 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 `const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "`
 
 
+## Authors
+* [Attila Varga](mailto: varga_attila@mail.com)
+
+
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
