@@ -3,6 +3,7 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 
 #### NOTE: You need an Open Weather Map API key to properly use the application.
 
+
 ## How To Use
 * Sign up and Log in to the [Open Weather Map website](https://home.openweathermap.org)
 * Create a new API key [HERE](https://home.openweathermap.org/api_key)
@@ -18,8 +19,10 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 `const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "`
 
 
+
 ## Authors
 * Attila Varga  (varga_attila@mail.com)
+
 
 
 ## License
