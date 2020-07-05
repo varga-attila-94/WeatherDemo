@@ -42,7 +42,7 @@ class Repository(val app: Application) {
     private var service: WeatherService = RetrofitInstance.getRetrofitInstance().create(
         WeatherService::class.java
     )
-    var preferenceHelper: PreferenceHelper = PreferenceHelper((app))
+    private var preferenceHelper: PreferenceHelper = PreferenceHelper((app))
 
 
     fun getCurrentWeather(): MutableLiveData<CurrentData> {

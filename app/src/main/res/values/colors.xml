@@ -11,5 +11,6 @@
     <color name="titleColor">#574329</color>
     <color name="textColor">#866740</color>
     <color name="buttonColor">#c6a272</color>
+    <color name="indicatorColor">#d5a261</color>
     <color name="red">#FF0000</color>
 </resources>

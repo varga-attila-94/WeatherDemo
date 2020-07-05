@@ -49,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     val PERMISSION_ID = 442
     val serviceClass = LocationService::class.java
     lateinit var locationIntent: Intent
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -247,5 +248,16 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         progressDialog.setCanceledOnTouchOutside(false)
     }
 
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, getString(R.string.click_back_again), Toast.LENGTH_SHORT).show()
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    }
 
 }

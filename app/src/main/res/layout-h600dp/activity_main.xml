@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(weatherViewModel.currentWeatherLiveData.temp)}"
                     android:textColor="@color/titleColor"
-                    android:textSize="90sp"
+                    android:textSize="100sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -215,10 +215,10 @@
                     android:background="@color/mainBackground"
                     android:foregroundGravity="center"
                     app:dampingRatio="0.5"
-                    app:dotsColor="@color/textColor"
-                    app:dotsCornerRadius="2dp"
-                    app:dotsSize="12dp"
-                    app:dotsSpacing="10dp"
+                    app:dotsColor="@color/indicatorColor"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="7dp"
                     app:dotsStrokeWidth="1dp"
                     app:stiffness="200" />
             </LinearLayout>

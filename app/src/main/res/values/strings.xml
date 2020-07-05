@@ -19,4 +19,5 @@
     <string name="temp">Temp.</string>
     <string name="min_temp">Min. Temp.</string>
     <string name="max_temp">Max. Temp.</string>
+    <string name="click_back_again">Please click BACK again to exit</string>
 </resources>
