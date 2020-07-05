@@ -11,7 +11,7 @@ import hu.attila.varga.weatherdemo.R
 import hu.attila.varga.weatherdemo.data.Repository
 import hu.attila.varga.weatherdemo.databinding.DetailFragmentBinding
 
-class DetailFragment(val repository: Repository, val position: Int) : Fragment() {
+class DetailFragment(private val repository: Repository, private val position: Int) : Fragment() {
 
     lateinit var binding: DetailFragmentBinding
     private lateinit var viewModel: DetailViewModel

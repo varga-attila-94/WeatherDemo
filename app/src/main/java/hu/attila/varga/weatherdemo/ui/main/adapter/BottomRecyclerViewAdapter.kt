@@ -34,8 +34,8 @@ class BottomRecyclerViewAdapter(val data: List<ForecastItemData>) :
 class ForecastViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     fun bind(forecastItemData: ForecastItemData) {
         view.bottom_item_day_name.text = forecastItemData.dayName
-        view.bottom_item_temp_min.text = forecastItemData.tempMin.toString()
-        view.bottom_item_temp_max.text = forecastItemData.tempMax.toString()
+        view.bottom_item_temp_min.text = forecastItemData.tempMin
+        view.bottom_item_temp_max.text = forecastItemData.tempMax
         Picasso.get()
             .load(Utils.IMAGE_BASE_URL + forecastItemData.weatherImage + "@4x.png")
             .into(view.bottom_item_image)

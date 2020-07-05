@@ -5,7 +5,7 @@ import hu.attila.varga.weatherdemo.R
 import hu.attila.varga.weatherdemo.data.Repository
 import hu.attila.varga.weatherdemo.data.model.fragment.FragmentItem
 
-class DetailViewModel(private val repository: Repository) : ViewModel() {
+class DetailViewModel(repository: Repository) : ViewModel() {
 
     private var firstFragmentData =
         arrayListOf(
