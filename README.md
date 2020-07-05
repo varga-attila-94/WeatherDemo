@@ -10,7 +10,6 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 * Go to the following directory on your Windows computer:
 `C:\Users\your_username\.gradle`
 * Create a new file named `gradle.properties` with the following content:
-
 `OPEN_WEATHER_MAP_API_KEY=" *** YOUR API KEY *** "`
 
 #### OR
