@@ -1,7 +1,7 @@
 # WeatherDemo
 Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofit
 
-#### NOTE: You need an Open Weather Map API key to properly use the application.
+#### NOTE: You need a free Open Weather Map API key to properly use the application.
 
 
 ## How To Use
