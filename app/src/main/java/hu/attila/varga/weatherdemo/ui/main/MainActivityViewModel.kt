@@ -15,7 +15,7 @@ class MainActivityViewModel(val app: Application) : AndroidViewModel(app) {
     var currentWeatherLiveData = MutableLiveData<CurrentData>()
     var forecastListLiveData = MutableLiveData<List<ForecastItemData>>()
     var currentLocationLiveData: SharedPreferenceLiveData<String>
-    private var repository: Repository = Repository(app)
+    var repository: Repository = Repository(app)
 
     init {
         repository = Repository(app)

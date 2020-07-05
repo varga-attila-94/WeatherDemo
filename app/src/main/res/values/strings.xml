@@ -10,4 +10,13 @@
     <string name="please_wait">Please wait</string>
     <string name="error_during_request">\"ERROR during request: \"</string>
     <string name="offline">offline</string>
+    <string name="percentage">%</string>
+    <string name="km_h">Km/h</string>
+    <string name="kpa">kPa</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="temp">Temp.</string>
+    <string name="min_temp">Min. Temp.</string>
+    <string name="max_temp">Max. Temp.</string>
 </resources>

@@ -124,12 +124,12 @@
             android:background="@color/mainBackground"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
-            android:paddingTop="80dp"
+            android:paddingTop="50dp"
             android:paddingRight="20dp"
-            android:paddingBottom="80dp"
+            android:paddingBottom="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/day_weather_layout"
-            app:layout_constraintVertical_weight="5">
+            app:layout_constraintVertical_weight="3">
 
             <ImageView
                 android:id="@+id/weather_image"
@@ -180,20 +180,50 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/detail_slider"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/mainBackground"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/bottom_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/temp_layout"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="2"
+            android:weightSum="5">
 
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="15dp">
+
+                <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/mainBackground"
+                    android:foregroundGravity="center"
+                    app:dampingRatio="0.5"
+                    app:dotsColor="@color/textColor"
+                    app:dotsCornerRadius="2dp"
+                    app:dotsSize="12dp"
+                    app:dotsSpacing="10dp"
+                    app:dotsStrokeWidth="1dp"
+                    app:stiffness="200" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_layout"
@@ -205,7 +235,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_slider"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="2">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bottom_recyclerview"
