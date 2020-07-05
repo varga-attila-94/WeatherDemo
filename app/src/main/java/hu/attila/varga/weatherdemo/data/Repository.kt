@@ -93,6 +93,7 @@ class Repository(val app: Application) {
     }
 
     fun getForecast(): MutableLiveData<List<ForecastItemData>> {
+        progress.value = true
         if (app.isConnected) {
             val lastCoord: Coord = PreferenceHelper(
                 app
@@ -104,6 +105,7 @@ class Repository(val app: Application) {
             )
                 .enqueue(object : Callback<ForecastResponse> {
                     override fun onFailure(call: Call<ForecastResponse>, t: Throwable) {
+                        progress.value = false
                         Toast.makeText(
                             app,
                             app.getString(R.string.error_during_request) + t.localizedMessage,
@@ -140,10 +142,11 @@ class Repository(val app: Application) {
                             // set new data to livedata
                             forecastListLiveData.postValue(list)
                         }
+                        progress.value = false
                     }
-
                 })
         } else {
+            progress.value = false
             // TODO get last data from local storage
         }
         return forecastListLiveData

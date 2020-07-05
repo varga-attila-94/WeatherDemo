@@ -186,7 +186,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         swipeContainer.setOnRefreshListener(listener)
     }
 
-
     protected open fun <T : @NotNull ViewDataBinding> putContentView(@LayoutRes resId: Int): T {
         baseViewModel.isProgressVisible.observe(this, Observer {
             if (it) progressDialog.show() else progressDialog.dismiss()
@@ -201,6 +200,7 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     protected fun setProgressVisibility(value: Boolean) {
+        swipeContainer.isRefreshing = false
         baseViewModel.setVisibility(value)
     }
 
