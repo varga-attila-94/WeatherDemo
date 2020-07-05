@@ -2,8 +2,6 @@ package hu.attila.varga.weatherdemo.ui.main
 
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +19,6 @@ class MainActivity : BaseActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var viewModelFactory: MainActivityViewModelFactory
-    private lateinit var item: LinearLayout
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +37,9 @@ class MainActivity : BaseActivity() {
             weatherViewModel = viewModel
         }
 
+        viewModel.showProgressBar.observe(this, Observer {
+            setProgressVisibility(it)
+        })
 
         viewModel.currentWeatherLiveData.observe(this, Observer {
             swipeContainer.isRefreshing = false
@@ -47,7 +47,6 @@ class MainActivity : BaseActivity() {
                 Picasso.get()
                     .load(IMAGE_BASE_URL + it.weatherImage + getString(R.string.image_extension))
                     .into(findViewById<ImageView>(R.id.weather_image))
-                setProgressVisibility(false)
             }
         })
 
@@ -57,29 +56,24 @@ class MainActivity : BaseActivity() {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         viewModel.forecastListLiveData.observe(this, Observer {
-            recyclerView.adapter =
-                BottomRecyclerViewAdapter(
-                    it
-                )
+            if (it != null) {
+                recyclerView.adapter =
+                    BottomRecyclerViewAdapter(
+                        it
+                    )
+            }
         })
 
         viewModel.currentLocationLiveData.observe(this, Observer {
-            viewModel.getCurrentWeather()
-            viewModel.getForecast()
+            if (it != null) {
+                viewModel.getCurrentWeather()
+                viewModel.getForecast()
+            }
         })
 
-
         setSwipeRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            if (true) { // TODO: Check internet connection
-                viewModel.getCurrentWeather()
-            } else {
-                swipeContainer.isRefreshing = false
-                Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.no_internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            viewModel.getCurrentWeather()
+            viewModel.getForecast()
         })
 
     }

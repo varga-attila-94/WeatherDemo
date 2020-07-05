@@ -6,6 +6,8 @@
     <string name="no_internet_connection">No internet connection</string>
     <string name="popular_restaurants">Popular restaurants</string>
     <string name="image_extension">\@4x.png</string>
-    <string name="loading">Loading</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="loading">Loading...</string>
+    <string name="please_wait">Please wait</string>
+    <string name="error_during_request">\"ERROR during request: \"</string>
+    <string name="offline">offline</string>
 </resources>

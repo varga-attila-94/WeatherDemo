@@ -8,12 +8,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -69,6 +72,34 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
         locationIntent = Intent(this@BaseActivity, serviceClass)
         getLastLocation()
+
+
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                it.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+                    override fun onAvailable(network: Network) {
+                        baseViewModel.setInternetAvailable(false)
+                        baseViewModel.setVisibility(false)
+                    }
+
+                    override fun onLost(network: Network?) {
+                        baseViewModel.setInternetAvailable(true)
+                    }
+                })
+            }
+        }
+
+
+        baseViewModel.isInternetAvailable.observe(this, Observer { it ->
+            findViewById<TextView>(R.id.offline).visibility = if (it) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        })
+
     }
 
     @SuppressLint("MissingPermission")
@@ -186,9 +217,7 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                     startActivity(Intent(this, EmptyActivity::class.java))
                     finish()
                 }, 250)
-
             }
-
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -210,10 +239,13 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         navView = findViewById(R.id.nav_view)
 
         swipeContainer = findViewById(R.id.swipeContainer)
-        swipeContainer.setColorSchemeResources(R.color.titleColor)
+        swipeContainer.setColorSchemeResources(R.color.textColor)
 
         progressDialog = ProgressDialog(this)
-        progressDialog.setTitle(getString(R.string.loading))
-        progressDialog.setMessage(getString(R.string.please_wait))
+        progressDialog.setTitle(getString(R.string.please_wait))
+        progressDialog.setMessage(getString(R.string.loading))
+        progressDialog.setCanceledOnTouchOutside(false)
     }
+
+
 }

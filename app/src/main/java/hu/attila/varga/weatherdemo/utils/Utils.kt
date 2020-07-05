@@ -11,6 +11,8 @@ class Utils {
         const val EXCLUDE_VALUES = "current,minutely,hourly"
         const val PREF_NAME = "pref_name"
         const val LAT_LON_PREF_KEY = "lat_lon_pref_key"
+        const val LAST_WEATHER_PREF_KEY = "lat_lon_pref_key"
+        const val LAST_FORECAST_KEY = "lat_lon_pref_key"
 
         const val DEFAULT_BUDAPEST_LAT = 47.496130
         const val DEFAULT_BUDAPEST_LON = 19.050605
