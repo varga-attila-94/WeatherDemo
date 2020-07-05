@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="hu.attila.varga.weatherdemo.viewmodel.BaseActivityViewModel" />
+            type="hu.attila.varga.weatherdemo.ui.base.BaseActivityViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

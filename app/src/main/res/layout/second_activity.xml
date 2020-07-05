@@ -8,7 +8,7 @@
 
         <variable
             name="secondViewModel"
-            type="hu.attila.varga.weatherdemo.viewmodel.SecondActivityViewModel" />
+            type="hu.attila.varga.weatherdemo.ui.empty.EmptyActivityViewModel" />
     </data>
 
 

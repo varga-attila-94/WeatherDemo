@@ -9,7 +9,7 @@
 
         <variable
             name="weatherViewModel"
-            type="hu.attila.varga.weatherdemo.viewmodel.MainActivityViewModel" />
+            type="hu.attila.varga.weatherdemo.ui.main.MainActivityViewModel" />
     </data>
 
 
@@ -38,7 +38,7 @@
                 android:gravity="bottom"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@{weatherViewModel.currentData.city}"
+                android:text="@{weatherViewModel.currentLiveData.city}"
                 android:textColor="@color/titleColor"
                 android:textSize="38sp"
                 android:textStyle="bold"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@{weatherViewModel.currentData.dayName}"
+                android:text="@{weatherViewModel.currentLiveData.dayName}"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@{weatherViewModel.currentData.weatherDescription}"
+                android:text="@{weatherViewModel.currentLiveData.weatherDescription}"
                 android:textColor="@color/textColor"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -154,7 +154,7 @@
                     android:id="@+id/temp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(weatherViewModel.currentData.temp)}"
+                    android:text="@{String.valueOf(weatherViewModel.currentLiveData.temp)}"
                     android:textColor="@color/titleColor"
                     android:textSize="90sp"
                     app:layout_constraintBottom_toBottomOf="parent"
