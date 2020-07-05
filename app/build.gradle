@@ -25,7 +25,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String' , "OPEN_WEATHER_MAP_API_KEY", OPEN_WEATHER_MAP_API_KEY
         }
     }
 
@@ -58,11 +57,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'me.grantland:autofittextview:0.2.+'
+    implementation 'me.grantland:autofittextview:0.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
