@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso
 import hu.attila.varga.weatherdemo.R
 import hu.attila.varga.weatherdemo.databinding.ActivityMainBinding
 import hu.attila.varga.weatherdemo.ui.base.BaseActivity
-import hu.attila.varga.weatherdemo.utils.Utils.Companion.IMAGE_BASE_URL
 import hu.attila.varga.weatherdemo.ui.main.adapter.BottomRecyclerViewAdapter
+import hu.attila.varga.weatherdemo.utils.Utils.Companion.IMAGE_BASE_URL
 
 
 class MainActivity : BaseActivity() {
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
         }
 
 
-        viewModel.currentLiveData.observe(this, Observer {
+        viewModel.currentWeatherLiveData.observe(this, Observer {
             swipeContainer.isRefreshing = false
             if (it != null) {
                 Picasso.get()
