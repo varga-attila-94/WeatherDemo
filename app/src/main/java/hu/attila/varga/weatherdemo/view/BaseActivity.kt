@@ -2,6 +2,7 @@ package hu.attila.varga.weatherdemo.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -33,6 +34,7 @@ import com.google.android.material.navigation.NavigationView
 import hu.attila.varga.weatherdemo.R
 import hu.attila.varga.weatherdemo.databinding.ActivityBaseBinding
 import hu.attila.varga.weatherdemo.model.current.Coord
+import hu.attila.varga.weatherdemo.utils.LocationService
 import hu.attila.varga.weatherdemo.utils.PreferenceHelper
 import hu.attila.varga.weatherdemo.utils.Utils.Companion.LAT_LON_PREF_KEY
 import hu.attila.varga.weatherdemo.viewmodel.BaseActivityViewModel
@@ -48,7 +50,8 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var progressDialog: ProgressDialog
     val PERMISSION_ID = 442
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    val serviceClass = LocationService::class.java
+    lateinit var locationIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +72,7 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        locationIntent = Intent(this@BaseActivity, serviceClass)
         getLastLocation()
     }
 
@@ -78,18 +80,8 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private fun getLastLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
-                    if (location == null) {
-                        requestNewLocationData()
-                    } else {
-                        PreferenceHelper(this).saveCurrentCoord(
-                            Coord(
-                                location.latitude,
-                                location.longitude
-                            )
-                        )
-                    }
+                if (!isServiceRunning(serviceClass)) {
+                    startService(locationIntent)
                 }
             } else {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
@@ -101,32 +93,21 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private fun requestNewLocationData() {
-        var mLocationRequest = LocationRequest()
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest.interval = 0
-        mLocationRequest.fastestInterval = 0
-        mLocationRequest.numUpdates = 1
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        mFusedLocationClient!!.requestLocationUpdates(
-            mLocationRequest, mLocationCallback,
-            Looper.myLooper()
-        )
-    }
+    // Custom method to determine whether a service is running
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
-    private val mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
-            PreferenceHelper(this@BaseActivity).saveCurrentCoord(
-                Coord(
-                    mLastLocation.latitude,
-                    mLastLocation.longitude
-                )
-            )
+        // Loop through the running services
+        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                // If the service is running then return true
+                return true
+            }
         }
+        return false
     }
+
 
     private fun isLocationEnabled(): Boolean {
         var locationManager: LocationManager =

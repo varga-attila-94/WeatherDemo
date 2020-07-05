@@ -29,6 +29,12 @@
         <activity
             android:name=".view.SecondActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".utils.LocationService"
+            android:enabled="true"
+            android:exported="true"
+            />
     </application>
 
 </manifest>
