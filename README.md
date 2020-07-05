@@ -20,7 +20,7 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 
 
 
-## Authors
+## Author
 * Attila Varga
 
 
