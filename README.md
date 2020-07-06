@@ -27,7 +27,7 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 * In the downloaded project open the `Utils.kt` file located in `WeatherDemo\app\src\main\java\hu\attila\varga\weatherdemo\utils` directory
 * Paste your API key:
 
-  `const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "`
+  ```const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "```
 
 ## Author
 * Attila Varga
