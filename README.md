@@ -22,7 +22,7 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 
 #### OR
 * Remove or comment out this line from `build.gradle` :
- ```
+  ```
   buildConfigField 'String' , "OPEN_WEATHER_MAP_API_KEY", OPEN_WEATHER_MAP_API_KEY
   ```
 
