@@ -16,16 +16,22 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 `C:\Users\your_username\.gradle`
 * Create a new file named `gradle.properties` with the following content:
 
-  `OPEN_WEATHER_MAP_API_KEY=" *** YOUR API KEY *** "`
+  ```
+  OPEN_WEATHER_MAP_API_KEY=" *** YOUR API KEY *** "
+  ```
 
 #### OR
 * Remove or comment out this line from `build.gradle` :
 
-```    buildConfigField 'String' , "OPEN_WEATHER_MAP_API_KEY", OPEN_WEATHER_MAP_API_KEY```
+```
+buildConfigField 'String' , "OPEN_WEATHER_MAP_API_KEY", OPEN_WEATHER_MAP_API_KEY
+```
 * In the downloaded project open the `Utils.kt` file located in `WeatherDemo\app\src\main\java\hu\attila\varga\weatherdemo\utils` directory
 * Paste your API key:
 
-  ```const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "```
+  ```
+  const val OPEN_WEATHER_MAP_API_KEY = " *** YOUR API KEY *** "
+  ```
 
 ## Author
 * Attila Varga
