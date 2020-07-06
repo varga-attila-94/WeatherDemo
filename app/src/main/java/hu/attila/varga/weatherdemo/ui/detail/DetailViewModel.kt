@@ -20,7 +20,7 @@ class DetailViewModel(repository: Repository) : ViewModel() {
                 repository.app.getString(R.string.wind_speed)
             ),
             FragmentItem(
-                repository.currentWeatherLiveData.value?.humidity.toString(),
+                repository.currentWeatherLiveData.value?.pressure.toString(),
                 repository.app.getString(R.string.kpa),
                 repository.app.getString(R.string.pressure)
             )
