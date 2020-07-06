@@ -5,8 +5,8 @@ Weather Demo App written in Kotlin using MVVM, LiveData, DataBinding and Retrofi
 
 
 ## Screenshots
-![Screenshot_1594048636](https://user-images.githubusercontent.com/67831641/86609925-e4ac5200-bfac-11ea-9c11-81d2450840d4.png)
-![Screenshot_1594048639](https://user-images.githubusercontent.com/67831641/86609921-e37b2500-bfac-11ea-9739-6362f68f210b.png)
+![Screenshot_1594054714](https://user-images.githubusercontent.com/67831641/86619413-ce0cf780-bfba-11ea-8df5-b0ef1314aba8.png)
+![Screenshot_1594054720](https://user-images.githubusercontent.com/67831641/86619419-d06f5180-bfba-11ea-9bcb-8aa7127c4937.png)
 
 
 ## How To Use
