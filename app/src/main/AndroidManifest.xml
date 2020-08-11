@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -30,10 +32,6 @@
             android:name=".ui.empty.EmptyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".data.service.LocationService"
-            android:enabled="true"
-            android:exported="true" />
 
     </application>
 

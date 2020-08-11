@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 class BaseActivityViewModel {
 
     var isProgressVisible = MutableLiveData<Boolean>()
+    var progressMessage = MutableLiveData<String>()
     var isInternetAvailable = MutableLiveData<Boolean>()
 
     init {
@@ -15,6 +16,10 @@ class BaseActivityViewModel {
 
     fun setVisibility(value: Boolean) {
         isProgressVisible.postValue(value)
+    }
+
+    fun setMessage(value: String) {
+        progressMessage.postValue(value)
     }
 
     fun setInternetAvailable(value: Boolean) {

@@ -20,4 +20,6 @@
     <string name="min_temp">Min. Temp.</string>
     <string name="max_temp">Max. Temp.</string>
     <string name="click_back_again">Please click BACK again to exit</string>
+    <string name="downloading_data">Downloading data...</string>
+    <string name="waiting_for_gps">Waiting for GPS position...</string>
 </resources>

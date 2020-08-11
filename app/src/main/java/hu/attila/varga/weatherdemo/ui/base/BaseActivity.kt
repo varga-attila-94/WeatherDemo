@@ -2,7 +2,6 @@ package hu.attila.varga.weatherdemo.ui.base
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -31,7 +30,6 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.navigation.NavigationView
 import hu.attila.varga.weatherdemo.R
-import hu.attila.varga.weatherdemo.data.service.LocationService
 import hu.attila.varga.weatherdemo.databinding.ActivityBaseBinding
 import hu.attila.varga.weatherdemo.ui.empty.EmptyActivity
 import hu.attila.varga.weatherdemo.ui.main.MainActivity
@@ -47,7 +45,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var progressDialog: ProgressDialog
     val PERMISSION_ID = 442
-    val serviceClass = LocationService::class.java
     lateinit var locationIntent: Intent
     private var doubleBackToExitPressedOnce = false
 
@@ -62,6 +59,8 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             R.layout.activity_base
         )
 
+        checkLocationPermissions()
+
         initLayout()
 
         val toggle = ActionBarDrawerToggle(
@@ -70,9 +69,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-
-        locationIntent = Intent(this@BaseActivity, serviceClass)
-        getLastLocation()
 
 
         val connectivityManager =
@@ -104,13 +100,9 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
+    private fun checkLocationPermissions() {
         if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                if (!isServiceRunning(serviceClass)) {
-                    startService(locationIntent)
-                }
-            } else {
+            if (!isLocationEnabled()) {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
@@ -118,21 +110,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         } else {
             requestPermissions()
         }
-    }
-
-
-    // Custom method to determine whether a service is running
-    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        // Loop through the running services
-        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                // If the service is running then return true
-                return true
-            }
-        }
-        return false
     }
 
 
@@ -177,7 +154,7 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     ) {
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLastLocation()
+
             }
         }
     }
@@ -191,6 +168,10 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         baseViewModel.isProgressVisible.observe(this, Observer {
             if (it) progressDialog.show() else progressDialog.dismiss()
         })
+
+        baseViewModel.progressMessage.observe(this, Observer {
+            progressDialog.setMessage(it)
+        })
         return DataBindingUtil.inflate(
             layoutInflater,
             resId,
@@ -203,6 +184,10 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     protected fun setProgressVisibility(value: Boolean) {
         swipeContainer.isRefreshing = false
         baseViewModel.setVisibility(value)
+    }
+
+    protected fun setProgressMessage(value: String) {
+        baseViewModel.setMessage(value)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

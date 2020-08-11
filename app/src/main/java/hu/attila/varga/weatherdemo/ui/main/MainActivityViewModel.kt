@@ -5,34 +5,27 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import hu.attila.varga.weatherdemo.data.Repository
-import hu.attila.varga.weatherdemo.data.local.SharedPreferenceLiveData
+import hu.attila.varga.weatherdemo.data.model.current.Coord
 import hu.attila.varga.weatherdemo.data.model.current.CurrentData
 import hu.attila.varga.weatherdemo.data.model.forecast.ForecastItemData
+import hu.attila.varga.weatherdemo.data.model.progress.ProgressData
 
 class MainActivityViewModel(val app: Application) : AndroidViewModel(app) {
 
-    var showProgressBar: LiveData<Boolean>
+    var showProgressBar: LiveData<ProgressData>
     var currentWeatherLiveData = MutableLiveData<CurrentData>()
     var forecastListLiveData = MutableLiveData<List<ForecastItemData>>()
-    var currentLocationLiveData: SharedPreferenceLiveData<String>
     var repository: Repository = Repository(app)
 
     init {
         repository = Repository(app)
-        getCurrentWeather()
-        getForecast()
-        currentLocationLiveData = repository.getCurrentLocation()
         showProgressBar = repository.progress
+        currentWeatherLiveData = repository.currentWeatherLiveData
+        forecastListLiveData = repository.forecastListLiveData
     }
 
-
-    fun getCurrentWeather() {
-        currentWeatherLiveData = repository.getCurrentWeather()
+    fun getAllData(coord: Coord?) {
+        repository.getAllData(coord)
     }
-
-    fun getForecast() {
-        forecastListLiveData = repository.getForecast()
-    }
-
 
 }

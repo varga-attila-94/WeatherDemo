@@ -1,6 +1,7 @@
 package hu.attila.varga.weatherdemo.ui.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,9 @@ import androidx.viewpager.widget.ViewPager
 import com.squareup.picasso.Picasso
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 import hu.attila.varga.weatherdemo.R
+import hu.attila.varga.weatherdemo.data.model.current.Coord
+import hu.attila.varga.weatherdemo.data.model.progress.ProgressData
+import hu.attila.varga.weatherdemo.data.remote.DeviceLocationTracker
 import hu.attila.varga.weatherdemo.databinding.ActivityMainBinding
 import hu.attila.varga.weatherdemo.ui.base.BaseActivity
 import hu.attila.varga.weatherdemo.ui.main.adapter.BottomRecyclerViewAdapter
@@ -18,7 +22,7 @@ import hu.attila.varga.weatherdemo.ui.main.adapter.DetailsPagerAdapter
 import hu.attila.varga.weatherdemo.utils.Utils.Companion.IMAGE_BASE_URL
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), DeviceLocationTracker.DeviceLocationListener {
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var viewModelFactory: MainActivityViewModelFactory
@@ -26,6 +30,7 @@ class MainActivity : BaseActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var pagerAdapter: DetailsPagerAdapter
     private lateinit var dotsIndicator: SpringDotsIndicator
+    private lateinit var locationTracker: DeviceLocationTracker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,8 @@ class MainActivity : BaseActivity() {
         }
 
         viewModel.showProgressBar.observe(this, Observer {
-            setProgressVisibility(it)
+            setProgressVisibility(it.showProgress)
+            setProgressMessage(it.message)
         })
 
         viewPager = findViewById(R.id.viewPager)
@@ -79,18 +85,22 @@ class MainActivity : BaseActivity() {
             }
         })
 
-        viewModel.currentLocationLiveData.observe(this, Observer {
-            if (it != null) {
-                viewModel.getCurrentWeather()
-                viewModel.getForecast()
-            }
-        })
-
         setSwipeRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            viewModel.getCurrentWeather()
-            viewModel.getForecast()
+            locationTracker.stopUpdate()
+            locationTracker = DeviceLocationTracker(this, this)
+            Handler().postDelayed({
+                swipeContainer.isRefreshing = false
+            }, 5000)
         })
 
+        locationTracker = DeviceLocationTracker(this, this)
+        viewModel.repository.progress.postValue(ProgressData(message = getString(R.string.waiting_for_gps)))
+    }
+
+
+    override fun onDeviceLocationChanged(coord: Coord?) {
+        locationTracker.stopUpdate()
+        viewModel.getAllData(coord)
     }
 
 

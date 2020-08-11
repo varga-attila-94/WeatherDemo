@@ -100,7 +100,7 @@
             app:itemIconTint="@color/black"
             app:itemTextColor="@color/black"
             app:menu="@menu/nav_menu"
-            app:theme="@style/NavigationDrawerStyle" />
+            android:theme="@style/NavigationDrawerStyle" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
