@@ -1,34 +1,31 @@
 package hu.attila.varga.weatherdemo.data.remote
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import hu.attila.varga.weatherdemo.data.model.current.Coord
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import kotlin.coroutines.CoroutineContext
 
-class DeviceLocationTracker(context: Context, deviceLocationListener: DeviceLocationListener) :
+class DeviceLocationTracker(
+    context: Context,
+    private var deviceLocationListener: DeviceLocationListener
+) :
     LocationListener, CoroutineScope {
     private var deviceLocation: Location? = null
-    private val context: WeakReference<Context>
+    private val context: WeakReference<Context> = WeakReference(context)
     private var locationManager: LocationManager? = null
-    private var deviceLocationListener: DeviceLocationListener
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
     init {
-        this.context = WeakReference(context)
-        this.deviceLocationListener = deviceLocationListener
         initializeLocationProviders()
     }
 
@@ -39,9 +36,6 @@ class DeviceLocationTracker(context: Context, deviceLocationListener: DeviceLoca
                 ?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         }
         locationManager?.apply {
-            // flag for GPS status
-            val isGPSEnabled =
-                isProviderEnabled(LocationManager.GPS_PROVIDER)            // flag for network status
             val isNetworkEnabled =
                 isProviderEnabled(LocationManager.PASSIVE_PROVIDER)            //If we have permission
             if (ActivityCompat.checkSelfPermission(
@@ -55,36 +49,11 @@ class DeviceLocationTracker(context: Context, deviceLocationListener: DeviceLoca
                 )
                 == PackageManager.PERMISSION_GRANTED
             ) {                //First Try GPS
-                if (isGPSEnabled) {
+                if (isNetworkEnabled) {
                     requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
+                        LocationManager.NETWORK_PROVIDER,
                         UPDATE_FREQUENCY_TIME,
                         UPDATE_FREQUENCY_DISTANCE.toFloat(), this@DeviceLocationTracker
-                    )
-                    deviceLocation =
-                        locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                } else {
-                    // Show alert to open GPS
-                    context.get()?.apply {
-                        AlertDialog.Builder(this)
-                            .setTitle("Enable GPS")
-                            .setMessage("Enable GPS")
-                            .setPositiveButton(
-                                "Settings"
-                            ) { _, _ ->
-                                val intent = Intent(
-                                    Settings.ACTION_LOCATION_SOURCE_SETTINGS
-                                )
-                                startActivity(intent)
-                            }.setNegativeButton("Cancel")
-                            { dialog, _ -> dialog.cancel() }.show()
-                    }
-                }                //If failed try using NetworkManger
-                if (null == deviceLocation && isNetworkEnabled) {
-                    requestLocationUpdates(
-                        LocationManager.PASSIVE_PROVIDER,
-                        0, 0f,
-                        this@DeviceLocationTracker
                     )
                     deviceLocation =
                         locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
@@ -127,10 +96,10 @@ class DeviceLocationTracker(context: Context, deviceLocationListener: DeviceLoca
     companion object {
         // The minimum distance to change Updates in meters
         private const val UPDATE_FREQUENCY_DISTANCE: Long =
-            10 // 10 meters
+            1 // 1 meters
 
         // The minimum time between updates in milliseconds
-        private const val UPDATE_FREQUENCY_TIME: Long = 10000 // 1 minute
+        private const val UPDATE_FREQUENCY_TIME: Long = 1
         private val TAG = DeviceLocationTracker::class.java.simpleName
     }
 }

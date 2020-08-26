@@ -2,7 +2,6 @@ package hu.attila.varga.weatherdemo.ui.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import hu.attila.varga.weatherdemo.data.Repository
 import hu.attila.varga.weatherdemo.data.model.current.Coord
@@ -12,7 +11,7 @@ import hu.attila.varga.weatherdemo.data.model.progress.ProgressData
 
 class MainActivityViewModel(val app: Application) : AndroidViewModel(app) {
 
-    var showProgressBar: LiveData<ProgressData>
+    var showProgressBar: MutableLiveData<ProgressData>
     var currentWeatherLiveData = MutableLiveData<CurrentData>()
     var forecastListLiveData = MutableLiveData<List<ForecastItemData>>()
     var repository: Repository = Repository(app)

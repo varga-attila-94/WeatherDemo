@@ -45,7 +45,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var progressDialog: ProgressDialog
     val PERMISSION_ID = 442
-    lateinit var locationIntent: Intent
     private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +57,6 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             this,
             R.layout.activity_base
         )
-
-        checkLocationPermissions()
 
         initLayout()
 
@@ -99,8 +96,13 @@ abstract class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkLocationPermissions()
+    }
+
     @SuppressLint("MissingPermission")
-    private fun checkLocationPermissions() {
+    protected fun checkLocationPermissions() {
         if (checkPermissions()) {
             if (!isLocationEnabled()) {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()

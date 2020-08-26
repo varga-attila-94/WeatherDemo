@@ -86,15 +86,26 @@ class MainActivity : BaseActivity(), DeviceLocationTracker.DeviceLocationListene
         })
 
         setSwipeRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            locationTracker.stopUpdate()
-            locationTracker = DeviceLocationTracker(this, this)
+            getLocation()
             Handler().postDelayed({
                 swipeContainer.isRefreshing = false
             }, 5000)
         })
 
         locationTracker = DeviceLocationTracker(this, this)
-        viewModel.repository.progress.postValue(ProgressData(message = getString(R.string.waiting_for_gps)))
+        viewModel.repository.progress.postValue(ProgressData(message = getString(R.string.waiting_for_current_location)))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getLocation()
+    }
+
+    private fun getLocation() {
+        locationTracker.stopUpdate()
+        locationTracker = DeviceLocationTracker(this, this)
+        viewModel.showProgressBar.postValue(ProgressData(true, getString(R.string.waiting_for_current_location)))
+        checkLocationPermissions()
     }
 
 
